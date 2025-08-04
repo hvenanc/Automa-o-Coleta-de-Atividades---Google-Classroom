@@ -5,9 +5,18 @@ function doGet() {
 
 // Retorna a lista de nomes dos alunos (coluna A, exceto cabeçalho)
 function listarNomesAlunos() {
-  const planilha = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const dados = planilha.getRange(2, 1, planilha.getLastRow() - 1, 1).getValues();
-  return dados.flat();
+  const planilha = SpreadsheetApp.getActiveSpreadsheet();
+  const abas = planilha.getSheets();
+  let nomes = [];
+
+  for (let aba of abas) {
+    const dados = aba.getRange(2, 1, aba.getLastRow() - 1, 1).getValues();
+    nomes = nomes.concat(dados.flat());
+  }
+
+  return nomes
+    .filter(nome => nome && nome.trim() !== '') // Remove vazios ou espaços
+    .sort((a, b) => a.localeCompare(b));        // Ordena alfabeticamente (considerando acentuação)
 }
 
 
@@ -38,7 +47,7 @@ function verificarFrequencia(nome, emailDigitado) {
           else if (percentual >= 60) classe = 'frequencia-amarelo';
           else classe = 'frequencia-vermelho';
 
-          let tabelaHTML = `<table class="table table-striped"><thead><tr>`;
+          let tabelaHTML = `<table class="table table-bordered text-center"><thead><tr>`;
           for (let j = 2; j < cabecalhos.length - 1; j++) {
             tabelaHTML += `<th>${cabecalhos[j]}</th>`;
           }
@@ -78,4 +87,3 @@ function verificarFrequencia(nome, emailDigitado) {
     classe: ''
   };
 }
-
