@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      .frequencia-verde {
+        background-color: #d4edda;
+        color: #155724;
+        border-left: 5px solid #28a745;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 15px;
+      }
+
+      .frequencia-amarelo {
+        background-color: #fff3cd;
+        color: #856404;
+        border-left: 5px solid #ffc107;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 15px;
+      }
+
+      .frequencia-vermelho {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-left: 5px solid #dc3545;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 15px;
+      }
+
+      table {
+        margin-top: 20px;
+      }
+
+      td {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body class="bg-light text-dark">
+    <div class="container py-4">
+      <div class="text-center mb-4">
+        <h2 class="text-primary">Consulta de Frequência</h2>
+        <h5>EREM Luísa Guerra</h5>
+        <h6>Tutor: Henrique Venâncio</h6>
+      </div>
+
+      <div class="mb-3">
+        <label for="aluno" class="form-label">Selecione seu nome:</label>
+        <select id="aluno" class="form-select"></select>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Digite seu email institucional:</label>
+        <input type="email" class="form-control" id="email" required>
+      </div>
+
+      <button class="btn btn-primary w-100" onclick="consultar()">Consultar Frequência</button>
+
+      <div id="resultado" class="mt-4"></div>
+    </div>
+
+    <!-- Bootstrap Bundle JS (opcional, para suporte a componentes como modal) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      function consultar() {
+        const nome = document.getElementById('aluno').value;
+        const email = document.getElementById('email').value;
+
+        google.script.run.withSuccessHandler(res => {
+          const resultadoDiv = document.getElementById('resultado');
+          resultadoDiv.innerHTML = res.mensagem;
+          resultadoDiv.className = ''; // limpando classes para usar do conteúdo gerado
+        }).verificarFrequencia(nome, email);
+      }
+
+      function carregarAlunos() {
+        google.script.run.withSuccessHandler(alunos => {
+          const select = document.getElementById('aluno');
+          alunos.forEach(nome => {
+            const option = document.createElement('option');
+            option.value = nome;
+            option.text = nome;
+            select.appendChild(option);
+          });
+        }).listarNomesAlunos();
+      }
+
+      carregarAlunos();
+    </script>
+  </body>
+</html>
