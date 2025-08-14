@@ -1,7 +1,7 @@
 function registrarSituacaoPorTemas() {
   const TURMAS = [
-    { id: '789996876690', nome: 'Turma 01' },
-    { id: '700438412127', nome: 'Turma 02' }
+    { id: 'a', nome: 'Turma 01' },
+    { id: 'b', nome: 'Turma 02' }
   ];
   const FILTROS = ['Miniprojeto', 'Desafio'];
   const planilha = SpreadsheetApp.getActiveSpreadsheet();
