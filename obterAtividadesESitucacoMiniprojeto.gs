@@ -13,7 +13,8 @@ function getResponsesAsObject(
     let link = "";
 
     for (const itemResponse of itemResponses) {
-      const questionTitle = itemResponse.getItem().getTitle().trimEnd();
+      //O Trim deve adicionado devido aos espaços deixados nas perguntas do Miniprojeto.
+      const questionTitle = itemResponse.getItem().getTitle().trim();
       const response = itemResponse.getResponse();
 
       if (questionTitle === nomeQuestionTitle) {
@@ -25,15 +26,13 @@ function getResponsesAsObject(
     }
 
     studentData.push({
-        email: nome, // aqui fica claro que é o e-mail do aluno
-        situacao: link 
-          ? (verificaLinkPublico(link) ? "Presente" : "linkprivado") 
-          : "Falta",
+      nome,
+      link: link ? (verificaLinkPublico(link) ? "Presente" : "Link Privado") : "Sem link",
     });
   }
 
   // Ordena o array pelo nome de forma mais simples
-  studentData.sort((a, b) => a.email.localeCompare(b.email));
+  studentData.sort((a, b) => a.nome.localeCompare(b.nome));
 
   return studentData;
 }
@@ -47,6 +46,7 @@ function getFormId(formLink) {
 
 function verificaLinkPublico(url) {
   try {
+    Logger.log(url)
     // Expressão regular genérica: captura o ID entre /d/ e /edit ou /view
     const regex = /\/d\/([a-zA-Z0-9_-]+)(?:\/|$)/;
     const match = url.match(regex);
@@ -79,8 +79,8 @@ function verificaLinkPublico(url) {
 function verificarAtividadesPorTurma() {
 
   const TURMAS = [
-    { id: 'A', nome: 'Turma 01' },
-    { id: 'B', nome: 'Turma 02' }
+    { id: 'ID - TURMA 1', nome: 'Turma 01' },
+    { id: 'ID - TURMA 2', nome: 'Turma 02' }
   ];
 
   //Ids das turmas do Classroom e Criação da Planilha com as Informações das Atividades.
@@ -199,7 +199,7 @@ function verificarAtividadesPorTurma() {
         }
         linha.push(situacaoDia1);
 
-        // DIA 2: avalia o miniprojeto 
+        // DIA 2: avalia o miniprojeto  
         let situacaoDia2 = 'Falta'; // valor padrão
         topico.miniprojetos.forEach(miniprojeto => {
           if (situacaoDia2 !== 'Falta') return; // já encontrou situação válida
@@ -207,14 +207,14 @@ function verificarAtividadesPorTurma() {
           if (miniprojeto.urlForm) {
             // Aqui recebo o Link do Forms do Miniprojeto.
             const respostas = getResponsesAsObject(getFormId(miniprojeto.urlForm));
-            const respostaAluno = respostas.find(r => r.email.toLowerCase() === aluno.profile.emailAddress.toLowerCase());
+            const respostaAluno = respostas.find(r => r.nome.toLowerCase() === aluno.profile.emailAddress.toLowerCase());
 
             if (respostaAluno) {
-              if (respostaAluno.situacao === "Presente") {
+              if (respostaAluno.link === "Presente") {
                 situacaoDia2 = "Presente";
                 presencas++;
-              } else if (respostaAluno.situacao === "linkprivado") {
-                situacaoDia2 = "LINK PRIVADO ⚠️";
+              } else if (respostaAluno.link === "Link Privado") {
+                situacaoDia2 = "* LINK PRIVADO *";
               } else {
                 situacaoDia2 = "Falta";
               }
@@ -228,7 +228,6 @@ function verificarAtividadesPorTurma() {
           }
         });
         linha.push(situacaoDia2);
-
       });
 
       const frequencia = totalDias > 0 ? Math.round((presencas / totalDias) * 100) : 0;

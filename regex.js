@@ -1,1 +1,0 @@
-^(https:\/\/drive\.google\.com\/.*\/[a-zA-Z0-9_-]+|https:\/\/docs\.google\.com\/(document|spreadsheets|presentation|forms)\/d\/[a-zA-Z0-9_-]+\/edit.*|https:\/\/www\.programiz\.com\/online-compiler\/[a-zA-Z0-9]+|https:\/\/www\.canva\.com\/design\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+\/edit.*|https:\/\/codepen\.io\/[a-zA-Z0-9-]+\/pen\/[a-zA-Z0-9]+)$
