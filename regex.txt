@@ -8,6 +8,6 @@ Miniprojeto EJA:
 
 ^https?:\/\/(?:docs\.google\.com\/(?:document|spreadsheets|presentation|forms)\/d\/[a-zA-Z0-9_-]+|drive\.google\.com\/(?:file\/d\/[a-zA-Z0-9_-]+|drive\/folders\/[a-zA-Z0-9_-]+)|forms\.gle\/[a-zA-Z0-9_-]+)
 
-Miniprojeto EM (Python, Javascript e Apresentações)
+Miniprojeto EM (Python, Javascript e Arquivos do Google Workspace)
 
 ^(https:\/\/drive\.google\.com\/.*\/[a-zA-Z0-9_-]+|https:\/\/docs\.google\.com\/(document|spreadsheets|presentation|forms)\/d\/[a-zA-Z0-9_-]+\/edit.*|https:\/\/www\.programiz\.com\/online-compiler\/[a-zA-Z0-9]+|https:\/\/www\.canva\.com\/design\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+\/edit.*|https:\/\/codepen\.io\/[a-zA-Z0-9-]+\/pen\/[a-zA-Z0-9]+)$
