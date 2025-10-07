@@ -90,6 +90,7 @@ function registrarSituacaoPorTemas() {
     alunos.forEach(aluno => {
       const linha = [aluno.profile.name.fullName, aluno.profile.emailAddress];
       let presencas = 0;
+      let tituloDesafio = []
 
       listaTopicosOrdenada.forEach(topico => {
         // DIA 1: avaliar 3 desafios
@@ -106,6 +107,9 @@ function registrarSituacaoPorTemas() {
             }
           }
           if (entregue) totalDesafiosEntregues++;
+          else {
+            tituloDesafio.push(desafio.atividade.title);
+          }
         });
 
         let situacaoDia1 = '';
@@ -113,7 +117,8 @@ function registrarSituacaoPorTemas() {
           situacaoDia1 = 'Presente';
           presencas++;
         } else if (totalDesafiosEntregues > 0) {
-          situacaoDia1 = 'Ausente de Entrega';
+          //situacaoDia1 = 'Ausente de Entrega';
+          situacaoDia1 = tituloDesafio.sort().join("\n");
         } else {
           situacaoDia1 = 'Falta';
         }
@@ -159,7 +164,6 @@ function alunoRespondeuFormularioFormsApp(email, urlForm) {
   try {
     const form = FormApp.openByUrl(urlForm);
     const respostas = form.getResponses();
-    Logger.log(form.getTitle())
 
     for (const resposta of respostas) {
       try {
